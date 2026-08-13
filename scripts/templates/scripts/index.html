@@ -1,0 +1,31 @@
+{% extends 'scripts/base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h2 class="fw-bold">قائمة السكريبتات والأدوات</h2>
+        <p class="text-muted">مجموعة الأدوات والسكريبتات المؤتمتة التي تم تطويرها.</p>
+    </div>
+</div>
+
+<div class="row">
+    {% for script in scripts %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <span class="badge bg-primary mb-2">{{ script.category.name }}</span>
+                <h5 class="card-title fw-bold">{{ script.title }}</h5>
+                <p class="card-text text-secondary">{{ script.description|truncatewords:20 }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+                <a href="{% url 'script_detail' script.pk %}" class="btn btn-outline-dark btn-sm w-100">عرض الكود والتفاصيل</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">لا توجد سكريبتات مضافة حالياً. قم ببدء إضافتها من لوحة التحكم (Admin)!</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

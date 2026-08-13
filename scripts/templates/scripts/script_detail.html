@@ -1,0 +1,53 @@
+{% extends 'scripts/base.html' %}
+
+{% block title %}{{ script.title }} - Scripts Hub{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        
+        <!-- زر العودة -->
+        <a href="{% url 'index' %}" class="btn btn-outline-secondary btn-sm mb-3">← العودة للرئيسية</a>
+
+        <!-- بطاقة السكريبت -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <span class="badge bg-primary mb-2">{{ script.category.name }}</span>
+                <h2 class="fw-bold mb-3">{{ script.title }}</h2>
+                <p class="text-secondary">{{ script.description }}</p>
+
+                {% if script.github_url %}
+                <a href="{{ script.github_url }}" target="_blank" class="btn btn-dark btn-sm mb-3">
+                    عرض على GitHub 🔗
+                </a>
+                {% endif %}
+
+                <!-- شريط الكود مع زر النسخ -->
+                <div class="position-relative mt-3">
+                    <button id="copy-btn" class="btn btn-light btn-sm position-absolute top-0 end-0 m-2" onclick="copyCode()">
+                        📋 نسخ الكود
+                    </button>
+                    <pre class="m-0 rounded"><code id="script-code" class="language-python">{{ script.code }}</code></pre>
+                </div>
+            </div>
+            <div class="card-footer bg-transparent text-muted small">
+                تاريخ الإضافة: {{ script.created_at|date:"Y-m-d" }}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function copyCode() {
+    const codeText = document.getElementById('script-code').innerText;
+    navigator.clipboard.writeText(codeText).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.innerText = '✅ تم النسخ!';
+        setTimeout(() => {
+            btn.innerText = '📋 نسخ الكود';
+        }, 2000);
+    });
+}
+</script>
+{% endblock %}
