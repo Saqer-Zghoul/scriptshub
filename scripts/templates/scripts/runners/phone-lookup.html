@@ -1,0 +1,27 @@
+<div class="card bg-light border-0 p-3 mb-4">
+    <h5 class="fw-bold mb-3">⚡ تجربة السكريبت مباشرة:</h5>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="text" name="phone_number" class="form-control" placeholder="أدخل رقم الهاتف (مثال: 0791234567)" required>
+            <button class="btn btn-primary" type="submit">تشغيل السكريبت 🚀</button>
+        </div>
+    </form>
+
+    {% if result %}
+        {% if result.status == 'valid' %}
+        <div class="alert alert-success mt-3 mb-0">
+            <h6 class="fw-bold">✅ نتائج الفحص الحقيقية:</h6>
+            <ul class="mb-0">
+                <li><strong>الصيغة الدولية:</strong> {{ result.number }}</li>
+                <li><strong>الدولة:</strong> {{ result.country }}</li>
+                <li><strong>مزود الخدمة:</strong> {{ result.carrier }}</li>
+            </ul>
+        </div>
+        {% else %}
+        <div class="alert alert-danger mt-3 mb-0">
+            ❌ {{ result.error }}
+        </div>
+        {% endif %}
+    {% endif %}
+</div>
